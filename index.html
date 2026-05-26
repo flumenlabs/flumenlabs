@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flumen Labs — gentle software for difficult days</title>
+  <meta name="description" content="Flumen Labs builds calm, trauma-informed, accessibility-first tools — designed to flow with you, never against you." />
+  <meta name="theme-color" content="#eef3f1" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%23eef3f1'/%3E%3Cpath d='M6 24 C 14 18, 18 30, 26 22 S 34 14, 34 14' stroke='%232f7e78' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M6 30 C 14 24, 18 36, 26 28 S 34 20, 34 20' stroke='%236fb5ae' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Flumen Labs" />
+  <meta property="og:description" content="Gentle software for difficult days. Calm, trauma-informed, accessibility-first tools." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://flumenlabs.eu" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --paper:      #eef3f1;   /* misty off-white          */
+      --paper-deep: #e3ece9;   /* slightly cooler           */
+      --ink:        #16312e;   /* deep slate-teal (text)    */
+      --ink-soft:   #3b5551;   /* muted body text           */
+      --teal:       #2f7e78;   /* primary river             */
+      --aqua:       #6fb5ae;   /* lighter current           */
+      --mist:       #a9d6d0;   /* pale water                */
+      --sand:       #d9b483;   /* warm accent               */
+      --card:       #f7faf8;   /* raised surface            */
+      --line:       #cdddd8;   /* hairlines                 */
+      --shadow:     22px 30px 60px -28px rgba(16, 49, 46, .35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Hanken Grotesk", -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* atmospheric gradient mesh behind everything */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(60% 50% at 15% 0%,  rgba(111,181,174,.30), transparent 70%),
+        radial-gradient(55% 45% at 90% 10%, rgba(217,180,131,.18), transparent 70%),
+        radial-gradient(70% 60% at 50% 100%, rgba(47,126,120,.16), transparent 70%),
+        linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+    }
+
+    /* fine grain overlay for tactility */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .skip {
+      position: absolute; left: -999px; top: 0;
+      background: var(--ink); color: var(--paper);
+      padding: .75rem 1.25rem; border-radius: 0 0 12px 0; z-index: 50;
+    }
+    .skip:focus { left: 0; }
+
+    .wrap { width: min(1080px, 90vw); margin-inline: auto; }
+
+    /* ---------- header ---------- */
+    header {
+      padding: 2rem 0 0;
+    }
+    .brandbar { display: flex; align-items: center; gap: .7rem; }
+    .mark {
+      width: 34px; height: 34px; flex: none;
+    }
+    .brandbar b {
+      font-family: "Fraunces", serif;
+      font-weight: 600;
+      font-size: 1.25rem;
+      letter-spacing: -.01em;
+    }
+
+    /* ---------- hero ---------- */
+    .hero {
+      padding: clamp(4rem, 13vh, 9rem) 0 clamp(3rem, 9vh, 6rem);
+    }
+    .eyebrow {
+      font-size: .82rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 600;
+      margin-bottom: 1.4rem;
+    }
+    h1 {
+      font-family: "Fraunces", serif;
+      font-weight: 400;
+      font-size: clamp(2.7rem, 7.5vw, 5.4rem);
+      line-height: 1.04;
+      letter-spacing: -.025em;
+      max-width: 16ch;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--teal);
+      position: relative;
+      white-space: nowrap;
+    }
+    /* hand-drawn flowing underline under the italic word */
+    h1 em::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: -.12em;
+      height: .32em;
+      background: no-repeat center/100% 100% url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 16' preserveAspectRatio='none'%3E%3Cpath d='M2 9 C 40 2, 70 14, 110 8 S 170 2, 198 9' fill='none' stroke='%236fb5ae' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+      opacity: .85;
+    }
+    .lede {
+      margin-top: 1.8rem;
+      font-size: clamp(1.08rem, 2.2vw, 1.4rem);
+      color: var(--ink-soft);
+      max-width: 46ch;
+      line-height: 1.55;
+    }
+
+    /* ---------- section heading ---------- */
+    .sec-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 2.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+    }
+    .sec-head h2 {
+      font-family: "Fraunces", serif;
+      font-weight: 500;
+      font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+      letter-spacing: -.02em;
+    }
+    .sec-head p { color: var(--ink-soft); font-size: .98rem; max-width: 34ch; }
+
+    /* ---------- project cards ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.3rem;
+      padding-bottom: clamp(4rem, 10vh, 7rem);
+    }
+    .card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 1.8rem 1.7rem 1.6rem;
+      box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: .75rem;
+      text-decoration: none; color: inherit;
+      transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s, border-color .45s;
+      overflow: hidden;
+    }
+    .card::before { /* soft current wash in the corner */
+      content: "";
+      position: absolute; right: -40%; top: -60%;
+      width: 90%; height: 130%;
+      background: radial-gradient(closest-side, rgba(111,181,174,.28), transparent);
+      transition: opacity .45s, transform .6s;
+      opacity: .5;
+    }
+    a.card:hover, a.card:focus-visible {
+      transform: translateY(-6px);
+      box-shadow: 26px 38px 70px -30px rgba(16,49,46,.45);
+      border-color: var(--aqua);
+      outline: none;
+    }
+    a.card:hover::before { opacity: .9; transform: translate(-6%, 4%); }
+
+    .card .top { display: flex; align-items: center; justify-content: space-between; }
+    .card h3 {
+      font-family: "Fraunces", serif;
+      font-weight: 500;
+      font-size: 1.4rem;
+      letter-spacing: -.015em;
+    }
+    .card .desc { color: var(--ink-soft); font-size: .98rem; }
+    .card .host { margin-top: auto; font-size: .85rem; color: var(--teal); font-weight: 500; }
+
+    .pill {
+      font-size: .68rem; letter-spacing: .08em; text-transform: uppercase;
+      font-weight: 600; padding: .3rem .6rem; border-radius: 999px;
+      border: 1px solid currentColor; white-space: nowrap;
+    }
+    .pill.live { color: var(--teal); background: rgba(47,126,120,.08); }
+    .pill.soon { color: #9a7838; background: rgba(217,180,131,.16); border-color: #d9b483; }
+
+    /* ---------- footer ---------- */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2.4rem 0 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      color: var(--ink-soft); font-size: .9rem;
+    }
+    footer .river { display: flex; align-items: center; gap: .55rem; font-weight: 500; color: var(--ink); }
+
+    /* ---------- flowing waves at the foot of the hero ---------- */
+    .waves { position: relative; width: 100%; height: 90px; margin-top: -1px; line-height: 0; }
+    .waves svg { width: 100%; height: 100%; display: block; }
+    .waves path { animation: drift 18s ease-in-out infinite alternate; }
+    .waves path:nth-child(2) { animation-duration: 24s; animation-direction: alternate-reverse; }
+    .waves path:nth-child(3) { animation-duration: 30s; }
+    @keyframes drift {
+      from { transform: translateX(-3%); }
+      to   { transform: translateX(3%); }
+    }
+
+    /* ---------- load-in animation ---------- */
+    [data-reveal] { opacity: 0; transform: translateY(18px); }
+    .ready [data-reveal] {
+      opacity: 1; transform: none;
+      transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1);
+      transition-delay: var(--d, 0s);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      [data-reveal] { opacity: 1 !important; transform: none !important; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#projects">Skip to projects</a>
+
+  <header class="wrap">
+    <div class="brandbar" data-reveal>
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true" fill="none">
+        <circle cx="20" cy="20" r="19" stroke="#2f7e78" stroke-width="1.4" opacity=".5"/>
+        <path d="M6 24 C 14 18, 18 30, 26 22 S 34 14, 34 14" stroke="#2f7e78" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M6 30 C 14 24, 18 36, 26 28 S 34 20, 34 20" stroke="#6fb5ae" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <b>Flumen&nbsp;Labs</b>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow" data-reveal style="--d:.05s">Calm tools, made with care</p>
+      <h1 data-reveal style="--d:.12s">Gentle software for <em>difficult</em> days.</h1>
+      <p class="lede" data-reveal style="--d:.22s">
+        Flumen Labs builds trauma-informed, accessibility-first tools — designed to
+        flow <em>with</em> you, never against you. <em>Flumen</em> is Latin for river:
+        like water, good software should find its way around the obstacles, not add to them.
+      </p>
+    </section>
+  </main>
+
+  <div class="waves" aria-hidden="true">
+    <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
+      <path d="M0,40 C 360,80 720,10 1080,40 C 1260,55 1380,45 1500,38 L1500,90 L0,90 Z" fill="#a9d6d0" opacity=".35"/>
+      <path d="M-60,55 C 300,20 660,75 1020,50 C 1200,38 1320,55 1500,48 L1500,90 L-60,90 Z" fill="#6fb5ae" opacity=".4"/>
+      <path d="M0,68 C 360,48 720,80 1080,62 C 1260,53 1380,66 1500,60 L1500,90 L0,90 Z" fill="#2f7e78" opacity=".5"/>
+    </svg>
+  </div>
+
+  <main class="wrap">
+    <section id="projects">
+      <div class="sec-head" data-reveal>
+        <h2>What we're building</h2>
+        <p>A small family of projects, each meeting people where they are.</p>
+      </div>
+
+      <div class="grid">
+        <a class="card" href="https://josefine.flumenlabs.eu" data-reveal style="--d:.05s">
+          <div class="top">
+            <h3>Josefine</h3>
+            <span class="pill soon">Coming soon</span>
+          </div>
+          <p class="desc">A gentle daily system for routines, health, and goals — built around CPTSD and ADHD. The system remembers so your brain doesn't have to. Nothing turns red; nothing scolds.</p>
+          <span class="host">josefine.flumenlabs.eu →</span>
+        </a>
+
+        <a class="card" href="https://solace.flumenlabs.eu" data-reveal style="--d:.13s">
+          <div class="top">
+            <h3>Solace</h3>
+            <span class="pill soon">In development</span>
+          </div>
+          <p class="desc">A trauma-informed mobile companion for mental health — grown from a 2024 Chalmers thesis into a real, working app you can carry with you.</p>
+          <span class="host">solace.flumenlabs.eu →</span>
+        </a>
+
+        <a class="card" href="https://accessibility.flumenlabs.eu" data-reveal style="--d:.21s">
+          <div class="top">
+            <h3>Accessibility</h3>
+            <span class="pill soon">In development</span>
+          </div>
+          <p class="desc">Tooling that scans, scores, and helps fix the web's accessibility gaps — so more people can use the things we all rely on.</p>
+          <span class="host">accessibility.flumenlabs.eu →</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <span class="river">
+      <svg width="22" height="22" viewBox="0 0 40 40" aria-hidden="true" fill="none">
+        <path d="M6 22 C 14 16, 18 28, 26 20 S 34 12, 34 12" stroke="#2f7e78" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      Flumen Labs
+    </span>
+    <span>© <span id="year">2026</span> · Made gently in Europe</span>
+  </footer>
+
+  <script>
+    // progressive enhancement: trigger the staggered load-in once fonts/layout settle
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { document.body.classList.add("ready"); });
+    });
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
