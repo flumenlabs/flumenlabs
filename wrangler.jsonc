@@ -1,21 +1,17 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "flumenlabs",
-  "main": "./src/index.ts",                       // your entry point
-  "compatibility_date": "2026-05-27",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "binding": "ASSETS",
-    "directory": "./dist",                         // build output, not "."
-    "not_found_handling": "single-page-application"
-  },
   "observability": {
-    "enabled": true,
+    "enabled": false,
+    "head_sampling_rate": 1,
     "logs": {
       "enabled": true,
-      "invocation_logs": true,
-      "head_sampling_rate": 1                       // drop below 1 on high-traffic Workers to cap cost
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1
     }
-    // "traces": { "enabled": true }                // billed since 2026-03-01; omit unless needed
   }
 }
