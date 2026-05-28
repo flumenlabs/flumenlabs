@@ -1,0 +1,30 @@
+<div class="waves" aria-hidden="true">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
+    <path d="M0,40 C 360,80 720,10 1080,40 C 1260,55 1380,45 1500,38 L1500,90 L0,90 Z" fill="#a9d6d0" opacity=".35"/>
+    <path d="M-60,55 C 300,20 660,75 1020,50 C 1200,38 1320,55 1500,48 L1500,90 L-60,90 Z" fill="#6fb5ae" opacity=".4"/>
+    <path d="M0,68 C 360,48 720,80 1080,62 C 1260,53 1380,66 1500,60 L1500,90 L0,90 Z" fill="#2f7e78" opacity=".5"/>
+  </svg>
+</div>
+
+<style>
+  /* Self-breakout: spans the full viewport regardless of any .wrap ancestor. */
+  .waves {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    height: 90px;
+    margin-top: -1px;
+    line-height: 0;
+  }
+  .waves svg { width: 100%; height: 100%; display: block; }
+  .waves path { animation: drift 18s ease-in-out infinite alternate; }
+  .waves path:nth-child(2) { animation-duration: 24s; animation-direction: alternate-reverse; }
+  .waves path:nth-child(3) { animation-duration: 30s; }
+  @keyframes drift {
+    from { transform: translateX(-3%); }
+    to   { transform: translateX(3%); }
+  }
+</style>
