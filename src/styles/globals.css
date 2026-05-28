@@ -1,8 +1,14 @@
-@import './tokens.css';
+@import "./tokens.css";
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: "Hanken Grotesk", -apple-system, sans-serif;
@@ -21,9 +27,9 @@ body::before {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(60% 50% at 15% 0%,  rgba(111,181,174,.30), transparent 70%),
-    radial-gradient(55% 45% at 90% 10%, rgba(217,180,131,.18), transparent 70%),
-    radial-gradient(70% 60% at 50% 100%, rgba(47,126,120,.16), transparent 70%),
+    radial-gradient(60% 50% at 15% 0%, rgba(111, 181, 174, 0.3), transparent 70%),
+    radial-gradient(55% 45% at 90% 10%, rgba(217, 180, 131, 0.18), transparent 70%),
+    radial-gradient(70% 60% at 50% 100%, rgba(47, 126, 120, 0.16), transparent 70%),
     linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
 }
 
@@ -33,22 +39,35 @@ body::after {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: .035;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .skip {
-  position: absolute; left: -999px; top: 0;
-  background: var(--ink); color: var(--paper);
-  padding: .75rem 1.25rem; border-radius: 0 0 12px 0; z-index: 50;
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 12px 0;
+  z-index: 50;
 }
-.skip:focus { left: 0; }
+.skip:focus {
+  left: 0;
+}
 
-.wrap { width: min(1080px, 90vw); margin-inline: auto; }
+.wrap {
+  width: min(1080px, 90vw);
+  margin-inline: auto;
+}
 
 .sec-head {
-  display: flex; align-items: baseline; justify-content: space-between;
-  gap: 1rem; flex-wrap: wrap;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
   margin-bottom: 2.2rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
@@ -57,28 +76,58 @@ body::after {
   font-family: "Fraunces", serif;
   font-weight: 500;
   font-size: clamp(1.5rem, 3.4vw, 2.1rem);
-  letter-spacing: -.02em;
+  letter-spacing: -0.02em;
 }
-.sec-head p { color: var(--ink-soft); font-size: .98rem; max-width: 34ch; }
+.sec-head p {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  max-width: 34ch;
+}
 
 footer {
   border-top: 1px solid var(--line);
   padding: 2.4rem 0 3rem;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 1rem;
-  color: var(--ink-soft); font-size: .9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
 }
-footer .river { display: flex; align-items: center; gap: .55rem; font-weight: 500; color: var(--ink); }
+footer .river {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 500;
+  color: var(--ink);
+}
 
-[data-reveal] { opacity: 0; transform: translateY(18px); }
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+}
 .ready [data-reveal] {
-  opacity: 1; transform: none;
-  transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1);
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
   transition-delay: var(--d, 0s);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  [data-reveal] { opacity: 1 !important; transform: none !important; }
-  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }

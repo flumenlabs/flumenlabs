@@ -5,9 +5,7 @@ import Eyebrow from '../components/Eyebrow.astro'
 import Waves from '../components/Waves.astro'
 import ProjectCard from '../components/ProjectCard.astro'
 
-const projects = (await getCollection('projects')).sort(
-  (a, b) => a.data.order - b.data.order,
-)
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
 ---
 <Base title="Flumen Labs — gentle software for difficult days">
   <section class="hero">
