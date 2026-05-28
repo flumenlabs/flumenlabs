@@ -1,0 +1,13 @@
+:root {
+  --paper:      #eef3f1;
+  --paper-deep: #e3ece9;
+  --ink:        #16312e;
+  --ink-soft:   #3b5551;
+  --teal:       #2f7e78;
+  --aqua:       #6fb5ae;
+  --mist:       #a9d6d0;
+  --sand:       #d9b483;
+  --card:       #f7faf8;
+  --line:       #cdddd8;
+  --shadow:     22px 30px 60px -28px rgba(16, 49, 46, .35);
+}
