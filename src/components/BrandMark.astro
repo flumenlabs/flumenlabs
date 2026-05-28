@@ -1,0 +1,12 @@
+---
+import markRaw from '../assets/brand-mark.svg?raw'
+
+interface Props {
+  size?: number
+}
+
+const { size = 34 } = Astro.props
+
+const sized = markRaw.replace('<svg ', `<svg width="${size}" height="${size}" `)
+---
+<Fragment set:html={sized} />

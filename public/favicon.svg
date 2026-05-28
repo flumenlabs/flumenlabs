@@ -1,0 +1,6 @@
+<!-- Synced manually from src/assets/brand-mark.svg. Update both files together. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <rect width="40" height="40" rx="9" fill="#eef3f1"/>
+  <path d="M6 24 C 14 18, 18 30, 26 22 S 34 14, 34 14" stroke="#2f7e78" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <path d="M6 30 C 14 24, 18 36, 26 28 S 34 20, 34 20" stroke="#6fb5ae" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+</svg>
