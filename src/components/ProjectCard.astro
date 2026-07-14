@@ -44,28 +44,41 @@ const delay = `${(0.05 + index * 0.08).toFixed(2)}s`
     box-shadow: var(--shadow);
     display: flex; flex-direction: column; gap: .75rem;
     text-decoration: none; color: inherit;
-    transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s, border-color .45s;
     overflow: hidden;
   }
   .card::before {
     content: "";
     position: absolute; right: -40%; top: -60%;
     width: 90%; height: 130%;
-    background: radial-gradient(closest-side, rgba(111,181,174,.28), transparent);
-    transition: opacity .45s, transform .6s;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--aqua) 28%, transparent), transparent);
     opacity: .5;
   }
+  /* Keyboard focus keeps the global outline: the 1px border shift alone
+     is 2.25:1 against the card — under the 3:1 an indicator needs. */
   .card:hover, .card:focus-visible {
-    transform: translateY(-6px);
     box-shadow: 26px 38px 70px -30px rgba(16,49,46,.45);
     border-color: var(--aqua);
-    outline: none;
   }
-  .card:hover::before { opacity: .9; transform: translate(-6%, 4%); }
+  .card:hover::before, .card:focus-visible::before { opacity: .9; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card {
+      transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s, border-color .45s;
+    }
+    .card::before {
+      transition: opacity .45s, transform .6s;
+    }
+    .card:hover, .card:focus-visible {
+      transform: translateY(-6px);
+    }
+    .card:hover::before, .card:focus-visible::before {
+      transform: translate(-6%, 4%);
+    }
+  }
 
   .top { display: flex; align-items: center; justify-content: space-between; }
   h3 {
-    font-family: "Fraunces", serif;
+    font-family: "Fraunces Variable", "Fraunces", serif;
     font-weight: 500;
     font-size: 1.4rem;
     letter-spacing: -.015em;
@@ -78,6 +91,9 @@ const delay = `${(0.05 + index * 0.08).toFixed(2)}s`
     font-weight: 600; padding: .3rem .6rem; border-radius: 999px;
     border: 1px solid currentColor; white-space: nowrap;
   }
-  .pill.live { color: var(--teal); background: rgba(47,126,120,.08); }
-  .pill.soon { color: #9a7838; background: rgba(217,180,131,.16); border-color: #d9b483; }
+  .pill.live { color: var(--teal); background: color-mix(in srgb, var(--teal) 8%, transparent); }
+  /* #755a24 holds 4.5:1 on the sand tint even under the hover-brightened
+     aqua glow; the old #9a7838 sat at 3.57:1. Candidate --sand-ink token. */
+  .pill.soon { color: #755a24; background: color-mix(in srgb, var(--sand) 16%, transparent); border-color: var(--sand); }
+  :global(.dark) .pill.soon { color: var(--sand); }
 </style>
