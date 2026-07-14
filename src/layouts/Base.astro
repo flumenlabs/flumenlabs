@@ -38,14 +38,36 @@ const year = new Date().getFullYear()
     />
 
     <ClientRouter />
+
+    <script is:inline>
+      const getTheme = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme')
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      }
+      const theme = getTheme()
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+      window.localStorage.setItem('theme', theme)
+    </script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
 
     <header class="wrap">
       <div class="brandbar" data-reveal>
-        <BrandMark />
-        <b>Flumen&nbsp;Labs</b>
+        <div class="brand-info">
+          <BrandMark />
+          <b>Flumen&nbsp;Labs</b>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg id="theme-sun" class="icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <svg id="theme-moon" class="icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
       </div>
     </header>
 
@@ -72,13 +94,75 @@ const year = new Date().getFullYear()
       document.addEventListener('astro:page-load', setReady)
     </script>
 
+    <script>
+      const initThemeToggle = () => {
+        const themeToggle = document.getElementById('theme-toggle')
+        const sunIcon = document.getElementById('theme-sun')
+        const moonIcon = document.getElementById('theme-moon')
+
+        const updateIcons = (theme: string) => {
+          if (theme === 'dark') {
+            sunIcon?.classList.remove('hidden')
+            moonIcon?.classList.add('hidden')
+          } else {
+            sunIcon?.classList.add('hidden')
+            moonIcon?.classList.remove('hidden')
+          }
+        }
+
+        const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+        updateIcons(currentTheme)
+
+        themeToggle?.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.toggle('dark')
+          const newTheme = isDark ? 'dark' : 'light'
+          localStorage.setItem('theme', newTheme)
+          updateIcons(newTheme)
+        })
+      }
+
+      initThemeToggle()
+      document.addEventListener('astro:after-swap', initThemeToggle)
+    </script>
+
     <style>
-      .brandbar { display: flex; align-items: center; gap: .7rem; padding: 2rem 0 0; }
-      .brandbar b {
+      .brandbar { display: flex; align-items: center; justify-content: space-between; padding: 2rem 0 0; }
+      .brand-info { display: flex; align-items: center; gap: .7rem; }
+      .brand-info b {
         font-family: "Fraunces", serif;
         font-weight: 600;
         font-size: 1.25rem;
         letter-spacing: -.01em;
+      }
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--ink-soft);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .theme-toggle:hover {
+        color: var(--ink);
+        border-color: var(--ink-soft);
+        transform: scale(1.05);
+      }
+      .theme-toggle:focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 3px;
+        border-radius: 50%;
+      }
+      .theme-toggle .icon {
+        width: 1.1rem;
+        height: 1.1rem;
+      }
+      .theme-toggle .icon.hidden {
+        display: none;
       }
     </style>
   </body>

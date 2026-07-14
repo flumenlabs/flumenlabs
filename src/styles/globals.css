@@ -6,6 +6,16 @@
   padding: 0;
 }
 
+*:focus-visible {
+  outline: 2.5px solid var(--teal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
 html {
   scroll-behavior: smooth;
 }
