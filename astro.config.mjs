@@ -6,4 +6,11 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [sitemap()],
+  vite: {
+    server: {
+      fs: {
+        allow: ['..']
+      }
+    }
+  }
 })
