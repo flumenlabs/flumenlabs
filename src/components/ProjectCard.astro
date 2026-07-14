@@ -1,0 +1,83 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  entry: CollectionEntry<'projects'>
+  index: number
+}
+
+const { entry, index } = Astro.props
+const { name, href, description, status } = entry.data
+
+const PILL_LABEL = {
+  live: 'Live',
+  in_development: 'In development',
+  coming_soon: 'Coming soon',
+} as const
+
+const PILL_CLASS = {
+  live: 'live',
+  in_development: 'soon',
+  coming_soon: 'soon',
+} as const
+
+const hostLabel = new URL(href).host
+
+const delay = `${(0.05 + index * 0.08).toFixed(2)}s`
+---
+<a class="card" href={href} data-reveal style={`--d:${delay}`}>
+  <div class="top">
+    <h3>{name}</h3>
+    <span class={`pill ${PILL_CLASS[status]}`}>{PILL_LABEL[status]}</span>
+  </div>
+  <p class="desc">{description}</p>
+  <span class="host">{hostLabel} →</span>
+</a>
+
+<style>
+  .card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 1.8rem 1.7rem 1.6rem;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: .75rem;
+    text-decoration: none; color: inherit;
+    transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s, border-color .45s;
+    overflow: hidden;
+  }
+  .card::before {
+    content: "";
+    position: absolute; right: -40%; top: -60%;
+    width: 90%; height: 130%;
+    background: radial-gradient(closest-side, rgba(111,181,174,.28), transparent);
+    transition: opacity .45s, transform .6s;
+    opacity: .5;
+  }
+  .card:hover, .card:focus-visible {
+    transform: translateY(-6px);
+    box-shadow: 26px 38px 70px -30px rgba(16,49,46,.45);
+    border-color: var(--aqua);
+    outline: none;
+  }
+  .card:hover::before { opacity: .9; transform: translate(-6%, 4%); }
+
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  h3 {
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: 1.4rem;
+    letter-spacing: -.015em;
+  }
+  .desc { color: var(--ink-soft); font-size: .98rem; }
+  .host { margin-top: auto; font-size: .85rem; color: var(--teal); font-weight: 500; }
+
+  .pill {
+    font-size: .68rem; letter-spacing: .08em; text-transform: uppercase;
+    font-weight: 600; padding: .3rem .6rem; border-radius: 999px;
+    border: 1px solid currentColor; white-space: nowrap;
+  }
+  .pill.live { color: var(--teal); background: rgba(47,126,120,.08); }
+  .pill.soon { color: #9a7838; background: rgba(217,180,131,.16); border-color: #d9b483; }
+</style>

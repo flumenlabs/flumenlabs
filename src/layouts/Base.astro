@@ -1,0 +1,85 @@
+---
+import { ClientRouter } from 'astro:transitions'
+import BrandMark from '../components/BrandMark.astro'
+import '../styles/globals.css'
+
+interface Props {
+  title: string
+  description?: string
+}
+
+const {
+  title,
+  description = 'Flumen Labs builds calm, trauma-informed, accessibility-first tools — designed to flow with you, never against you.',
+} = Astro.props
+
+const year = new Date().getFullYear()
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#eef3f1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="wrap">
+      <div class="brandbar" data-reveal>
+        <BrandMark />
+        <b>Flumen&nbsp;Labs</b>
+      </div>
+    </header>
+
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+
+    <footer class="wrap">
+      <span class="river">
+        <BrandMark size={22} />
+        Flumen Labs
+      </span>
+      <span>© {year} · Made gently in Europe</span>
+    </footer>
+
+    <script is:inline>
+      const setReady = () => {
+        document.body.classList.remove('ready')
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => document.body.classList.add('ready')),
+        )
+      }
+      setReady()
+      document.addEventListener('astro:page-load', setReady)
+    </script>
+
+    <style>
+      .brandbar { display: flex; align-items: center; gap: .7rem; padding: 2rem 0 0; }
+      .brandbar b {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 1.25rem;
+        letter-spacing: -.01em;
+      }
+    </style>
+  </body>
+</html>

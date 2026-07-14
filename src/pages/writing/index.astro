@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import Eyebrow from '../../components/Eyebrow.astro'
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+)
+
+const fmt = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: 'numeric' })
+---
+<Base title="Writing — Flumen Labs" description="Notes and essays from Flumen Labs.">
+  <section class="page">
+    <Eyebrow reveal>Writing</Eyebrow>
+    <h1 data-reveal style="--d:.1s">Notes and essays</h1>
+    {posts.length === 0 ? (
+      <p class="lede" data-reveal style="--d:.2s">Nothing here yet.</p>
+    ) : (
+      <ul class="posts" data-reveal style="--d:.2s">
+        {posts.map((post) => (
+          <li>
+            <a href={`/writing/${post.id}/`}>
+              <span class="title">{post.data.title}</span>
+              <time datetime={post.data.date.toISOString()}>{fmt.format(post.data.date)}</time>
+            </a>
+            {post.data.description && <p class="desc">{post.data.description}</p>}
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</Base>
+
+<style>
+  .page { padding: clamp(3rem, 10vh, 6rem) 0; }
+  h1 {
+    font-family: "Fraunces", serif;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    margin-bottom: 2rem;
+  }
+  .lede {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: var(--ink-soft);
+    max-width: 50ch;
+  }
+  .posts { list-style: none; padding: 0; display: grid; gap: 1.6rem; }
+  .posts a {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    text-decoration: none; color: var(--ink); font-size: 1.1rem;
+  }
+  .posts a:hover .title { color: var(--teal); }
+  .posts .title { font-family: "Fraunces", serif; font-weight: 500; }
+  .posts time { color: var(--ink-soft); font-size: .85rem; white-space: nowrap; }
+  .posts .desc { margin-top: .4rem; color: var(--ink-soft); }
+</style>

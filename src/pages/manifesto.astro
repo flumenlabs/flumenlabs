@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro'
+import Eyebrow from '../components/Eyebrow.astro'
+---
+<Base title="Manifesto — Flumen Labs" description="Why we build like this.">
+  <section class="page">
+    <Eyebrow reveal>Manifesto</Eyebrow>
+    <h1 data-reveal style="--d:.1s">Why we build like this</h1>
+    <p class="lede" data-reveal style="--d:.2s">
+      A page to be written.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .page { padding: clamp(3rem, 10vh, 6rem) 0; }
+  h1 {
+    font-family: "Fraunces", serif;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.1;
+    letter-spacing: -.02em;
+  }
+  .lede {
+    margin-top: 1.5rem;
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: var(--ink-soft);
+    max-width: 50ch;
+  }
+</style>
